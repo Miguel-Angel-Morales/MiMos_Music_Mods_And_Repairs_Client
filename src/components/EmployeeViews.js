@@ -20,15 +20,15 @@ export const EmployeeViews = () => {
                 <TicketList />
             </Route>
 
-            <Route exact path="/tickets">
+            <Route exact path="/servicetickets">
                 <TicketList />
             </Route>
 
-            <Route exact path="/tickets/:ticketId(\d+)">
+            <Route exact path="/servicetickets/:ticketId(\d+)">
                 <Ticket />
             </Route>
 
-            <Route path="/tickets/create">
+            <Route path="/servicetickets/create">
                 <TicketForm />
             </Route>
 

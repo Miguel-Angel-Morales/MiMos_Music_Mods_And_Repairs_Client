@@ -12,13 +12,13 @@ export const EmployeeNavBar = () => {
                 <Link className="navbar__link" to="/customers">Customers</Link>
             </li>
             <li className="navbar__item">
-                <Link className="navbar__link" to="/tickets">Service Tickets</Link>
+                <Link className="navbar__link" to="/servicetickets">Service Tickets</Link>
             </li>
             <li className="navbar__item">
                 <Link className="navbar__link" to="#"
                     onClick={
                         () => {
-                            localStorage.removeItem("honeyrae")
+                            localStorage.removeItem("musicrepairs")
                         }
                     }>
                     Logout

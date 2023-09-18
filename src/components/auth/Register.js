@@ -26,7 +26,7 @@ export const Register = () => {
                 });
             })
             .then(createdUser => {
-                localStorage.setItem("honeyrae", JSON.stringify(createdUser))
+                localStorage.setItem("musicrepairs", JSON.stringify(createdUser))
                 history.push("/")
             })
             .catch(error => {
@@ -70,13 +70,6 @@ export const Register = () => {
                     <label htmlFor="last_name"> Last Name </label>
                     <input onChange={updateCustomer}
                         type="text" id="last_name"
-                        className="form-control" required />
-                </fieldset>
-                <fieldset>
-                    <label htmlFor="address"> Address </label>
-                    <input onChange={updateCustomer}
-                        type="text"
-                        id="address"
                         className="form-control" required />
                 </fieldset>
                 <fieldset>
