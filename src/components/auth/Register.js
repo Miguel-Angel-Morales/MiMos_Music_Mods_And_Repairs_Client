@@ -73,13 +73,6 @@ export const Register = () => {
                         className="form-control" required />
                 </fieldset>
                 <fieldset>
-                    <label htmlFor="address"> Address </label>
-                    <input onChange={updateCustomer}
-                        type="text"
-                        id="address"
-                        className="form-control" required />
-                </fieldset>
-                <fieldset>
                     <label htmlFor="email"> Email address </label>
                     <input onChange={updateCustomer}
                         type="email"

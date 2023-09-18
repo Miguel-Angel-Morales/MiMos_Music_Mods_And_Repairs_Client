@@ -10,7 +10,7 @@ export const Ticket = () => {
     const history = useHistory()
 
     const fetchTicket = useCallback(() => {
-        return fetchIt(`http://localhost:8000/tickets/${ticketId}`)
+        return fetchIt(`http://localhost:8000/servicetickets/${ticketId}`)
             .then(loadTicket)
             .catch(() => loadTicket({}))
     }, [ticketId])
@@ -32,18 +32,18 @@ export const Ticket = () => {
 
     const deleteTicket = () => {
         fetchIt(
-            `http://localhost:8000/tickets/${ticketId}`,
+            `http://localhost:8000//${ticketId}`,
             {
                 method: "DELETE"
             }
-        ).then(() => history.push("/tickets"))
+        ).then(() => history.push("/servicetickets"))
     }
 
     const updateTicket = (evt) => {
-        const updatedTicket = {...ticket, employee: parseInt(evt.target.value)}
+        const updatedTicket = { ...ticket, employee: parseInt(evt.target.value) }
 
         fetchIt(
-            `http://localhost:8000/tickets/${ticketId}`,
+            `http://localhost:8000/servicetickets/${ticketId}`,
             {
                 method: "PUT",
                 body: JSON.stringify(updatedTicket)
@@ -95,7 +95,7 @@ export const Ticket = () => {
                         }
                     </div>
                     <div className="footerItem">
-                        { ticketStatus() }
+                        {ticketStatus()}
                     </div>
                     {
                         isStaff()

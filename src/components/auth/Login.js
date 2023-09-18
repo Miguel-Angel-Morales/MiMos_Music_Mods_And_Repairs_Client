@@ -4,8 +4,8 @@ import { useHistory } from "react-router-dom"
 import "./Login.css"
 
 export const Login = () => {
-    const [email, setEmail] = useState("AceTele@gmail.com")
-    const [password, setPassword] = useState("Hello")
+    const [email, setEmail] = useState("ATele@gmail.com")
+    const [password, setPassword] = useState("Password123")
     const existDialog = useRef()
     const history = useHistory()
 
