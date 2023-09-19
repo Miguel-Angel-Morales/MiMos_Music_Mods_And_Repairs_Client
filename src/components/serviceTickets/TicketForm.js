@@ -6,7 +6,6 @@ export const TicketForm = () => {
 
     const [ticket, updateTicket] = useState({
         customer: "",
-        employee: "",
         instrument: "",
         description: "",
         notes: "",
@@ -22,26 +21,12 @@ export const TicketForm = () => {
 
 
     useEffect(() => {
-        chooseInstruments();
-    }, []);
-
-    const chooseInstruments = () => {
         fetchIt("http://localhost:8000/instruments")
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json(); // Parse response as JSON
-            })
-            .then((data) => {
-                // Log the response data and update the instruments state
-                console.log("Instruments data:", data);
-                updateInstruments(data);
-            })
-            .catch((error) => {
-                console.error("Error fetching instruments:", error);
-            });
-    };
+        .then((instrument) => {
+            updateInstruments(instrument)
+        })
+        .catch(() => updateInstruments([]))
+    }, []);
 
 
     const submitTicket = (evt) => {

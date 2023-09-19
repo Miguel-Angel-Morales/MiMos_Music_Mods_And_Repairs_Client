@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react"
 import { useHistory } from "react-router-dom"
+import { fetchIt } from "../../utils/fetchIt"
 import "./Login.css"
 
 export const EmployeeRegister = (props) => {
@@ -47,10 +48,21 @@ export const EmployeeRegister = (props) => {
     }
 
 
+    const [selectedSpecialty, setSelectedSpecialty] = useState([])
+
+    useEffect(() => {
+        fetchIt("http://localhost:8000/instruments")
+            .then((specialty) => {
+                setSelectedSpecialty(specialty);
+            })
+            .catch(() => setSelectedSpecialty([]));
+    }, []);
+
+
     return (
         <main style={{ textAlign: "center" }}>
             <dialog className="dialog dialog--password" ref={conflictDialog}>
-                <div>{ serverFeedback }</div>
+                <div>{serverFeedback}</div>
                 <button className="button--close"
                     onClick={e => conflictDialog.current.close()}>Close</button>
             </dialog>
@@ -70,12 +82,26 @@ export const EmployeeRegister = (props) => {
                         placeholder="Enter your last name" required />
                 </fieldset>
                 <fieldset>
-                    <label htmlFor="specialty"> Specialty </label>
-                    <input onChange={updateEmployee}
-                        type="text"
-                        id="specialty"
-                        className="form-control"
-                        placeholder="Tech specialty" required />
+                    <div className="form-control">
+                        <label htmlFor="specialty"> Specialty </label>
+                        <select
+                            name="specialty"
+                            className="form-control"
+                            value={employee.specialty}
+                            onChange={(evt) => {
+                                const copy = { ...employee };
+                                copy.specialty = evt.target.value;
+                                setEmployee(copy); // Update the employee state
+                            }}
+                        >
+                            <option value="">Select Specialty</option>
+                            {selectedSpecialty.map((instrument) => (
+                                <option key={instrument.id} value={instrument.id}>
+                                    {instrument.instrument_name}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
                 </fieldset>
                 <fieldset>
                     <label htmlFor="email"> Email address </label>
