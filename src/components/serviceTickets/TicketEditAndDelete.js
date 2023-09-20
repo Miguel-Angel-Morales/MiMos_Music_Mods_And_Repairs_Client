@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from "react"
 import { useHistory } from "react-router-dom"
 import { fetchIt } from "../../utils/fetchIt"
+import { useParams } from "react-router-dom"
 
-export const TicketForm = () => {
+export const TicketEditAndDelete = () => {
 
-    const [ticket, updateTicket] = useState({
-        customer: "",
+    
+    const [ticket, setTicket] = useState({
+        customer: { id: null, user: null }, // Default values based on the API response structure
         instrument: "",
-        description: "",
-        notes: "",
-        date: "",
+        description: '',
+        notes: '',
+        date: '',
         modification: false,
         repair: false,
         setup: false,
@@ -17,6 +19,7 @@ export const TicketForm = () => {
     });
 
     const [instruments, updateInstruments] = useState([]);
+    const { ticketId } = useParams();
     const history = useHistory();
 
 
@@ -29,12 +32,21 @@ export const TicketForm = () => {
     }, []);
 
 
-    const submitTicket = (evt) => {
+    useEffect(() => {
+        fetchIt(`http://localhost:8000/servicetickets/${ticketId}`)
+            .then((data) => {
+                setTicket(data);
+            })
+            .catch(() => setTicket({}));
+    }, [ticketId]);
+
+
+    const submitEditedTicket = (evt) => {
         evt.preventDefault()
 
         fetchIt(
-            "http://localhost:8000/servicetickets",
-            { method: "POST", body: JSON.stringify(ticket) }
+            `http://localhost:8000/servicetickets/${ticketId}`,
+            { method: "PUT", body: JSON.stringify(ticket) }
         )
             .then(() => history.push("/servicetickets"))
     }
@@ -47,27 +59,31 @@ export const TicketForm = () => {
 
     return (
         <form className="ticketForm">
-            <h2 className="ticketForm__title">New Service Ticket</h2>
+            <h2 className="ticketForm__title">Edit Service Ticket</h2>
             <fieldset>
                 <div className="form-group">
                     <label htmlFor="instrument">Instrument</label>
                     <select
                         name="instrument"
                         className="form-control"
-                        value={ticket.instrument}
+                        value={ticket.instrument.id} // Use the ID property
                         onChange={(evt) => {
                             const copy = { ...ticket };
-                            copy.instrument = evt.target.value;
-                            updateTicket(copy);
+                            copy.instrument.id = evt.target.value; // Update the ID property
+                            setTicket(copy);
                         }}
                     >
                         <option value="">Select an instrument...</option>
                         {instruments.map((instrument) => (
-                            <option key={instrument.id} value={instrument.id}>
+                            <option
+                                key={instrument.id}
+                                value={instrument.id}
+                            >
                                 {instrument.instrument_name}
                             </option>
                         ))}
                     </select>
+
                 </div>
             </fieldset>
             <fieldset>
@@ -81,9 +97,9 @@ export const TicketForm = () => {
                         className="form-control"
                         value={ticket.date}
                         onChange={(evt) => {
-                            const copy = { ...ticket };
+                            const copy = { ...ticket};
                             copy.date = evt.target.value;
-                            updateTicket(copy);
+                            setTicket(copy);
                         }}
                     />
                 </div>
@@ -96,13 +112,14 @@ export const TicketForm = () => {
                             (evt) => {
                                 const copy = { ...ticket }
                                 copy.description = evt.target.value
-                                updateTicket(copy)
+                                setTicket(copy)
                             }
                         }
                         required autoFocus
                         type="text" id="description"
                         className="form-control"
                         placeholder="What work would you like done?"
+                        value={ticket.description}
                     />
                 </div>
             </fieldset>
@@ -117,7 +134,7 @@ export const TicketForm = () => {
                         onChange={(evt) => {
                             const copy = { ...ticket };
                             copy.modification = evt.target.value === 'true';
-                            updateTicket(copy);
+                            setTicket(copy);
                         }}
                     />
                     <label htmlFor="modification">Yes</label>
@@ -130,13 +147,12 @@ export const TicketForm = () => {
                         onChange={(evt) => {
                             const copy = { ...ticket };
                             copy.modification = evt.target.value === 'true';
-                            updateTicket(copy);
+                            setTicket(copy);
                         }}
                     />
                     <label htmlFor="modification">No</label>
                 </div>
             </fieldset>
-
             <fieldset>
                 <div className="form-group">
                     <label htmlFor="repair">Repair:</label>
@@ -148,7 +164,7 @@ export const TicketForm = () => {
                         onChange={(evt) => {
                             const copy = { ...ticket };
                             copy.repair = evt.target.value === 'true';
-                            updateTicket(copy);
+                            setTicket(copy);
                         }}
                     />
                     <label htmlFor="repair">Yes</label>
@@ -161,13 +177,12 @@ export const TicketForm = () => {
                         onChange={(evt) => {
                             const copy = { ...ticket };
                             copy.repair = evt.target.value === 'true';
-                            updateTicket(copy);
+                            setTicket(copy);
                         }}
                     />
                     <label htmlFor="repair">No</label>
                 </div>
             </fieldset>
-
             <fieldset>
                 <div className="form-group">
                     <label htmlFor="setup">Setup:</label>
@@ -179,7 +194,7 @@ export const TicketForm = () => {
                         onChange={(evt) => {
                             const copy = { ...ticket };
                             copy.setup = evt.target.value === 'true';
-                            updateTicket(copy);
+                            setTicket(copy);
                         }}
                     />
                     <label htmlFor="setup">Yes</label>
@@ -192,7 +207,7 @@ export const TicketForm = () => {
                         onChange={(evt) => {
                             const copy = { ...ticket };
                             copy.setup = evt.target.value === 'true';
-                            updateTicket(copy);
+                            setTicket(copy);
                         }}
                     />
                     <label htmlFor="setup">No</label>
@@ -210,7 +225,7 @@ export const TicketForm = () => {
                         onChange={(evt) => {
                             const copy = { ...ticket };
                             copy.priority = evt.target.value === 'true';
-                            updateTicket(copy);
+                            setTicket(copy);
                         }}
                     />
                     <label htmlFor="priority">Yes</label>
@@ -223,7 +238,7 @@ export const TicketForm = () => {
                         onChange={(evt) => {
                             const copy = { ...ticket };
                             copy.priority = evt.target.value === 'true';
-                            updateTicket(copy);
+                            setTicket(copy);
                         }}
                     />
                     <label htmlFor="priority">No</label>
@@ -238,17 +253,19 @@ export const TicketForm = () => {
                             (evt) => {
                                 const copy = { ...ticket }
                                 copy.notes = evt.target.value
-                                updateTicket(copy)
+                                setTicket(copy)
                             }
                         }
                         required autoFocus
-                        type="text" id="notes"
+                        type="text" 
+                        id="notes"
                         className="form-control"
                         placeholder="Notes for our techs"
+                        value={ticket.notes}
                     />
                 </div>
             </fieldset>
-            <button onClick={submitTicket} className="btn btn-primary">
+            <button onClick={submitEditedTicket} className="btn btn-primary">
                 Submit Ticket
             </button>
         </form>

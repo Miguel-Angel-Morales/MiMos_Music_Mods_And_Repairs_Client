@@ -3,6 +3,7 @@ import { Route } from "react-router-dom"
 import { Ticket } from "./serviceTickets/Ticket";
 import { TicketForm } from "./serviceTickets/TicketForm";
 import { TicketList } from "./serviceTickets/TicketList";
+import { TicketEditAndDelete } from "./serviceTickets/TicketEditAndDelete";
 
 export const ApplicationViews = () => {
 
@@ -22,6 +23,10 @@ export const ApplicationViews = () => {
 
             <Route path="/servicetickets/create">
                 <TicketForm />
+            </Route>
+
+            <Route path="/servicetickets/edit/:ticketId">
+                <TicketEditAndDelete />
             </Route>
         </>
     )

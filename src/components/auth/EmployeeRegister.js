@@ -83,7 +83,7 @@ useEffect(() => {
                         placeholder="Enter your last name" required />
                 </fieldset>
                 <fieldset>
-                    <div className="form-control">
+                    <div className="form-group">
                         <label htmlFor="specialty"> Specialty </label>
                         <select
                             name="specialty"

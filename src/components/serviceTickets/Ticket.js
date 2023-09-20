@@ -32,7 +32,7 @@ export const Ticket = () => {
 
     const deleteTicket = () => {
         fetchIt(
-            `http://localhost:8000//${ticketId}`,
+            `http://localhost:8000/servicetickets/${ticketId}`,
             {
                 method: "DELETE"
             }
