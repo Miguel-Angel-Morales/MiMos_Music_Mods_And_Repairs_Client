@@ -1,11 +1,12 @@
 import React, { useEffect, useRef, useState } from "react"
 import { useHistory } from "react-router-dom"
-import { fetchIt } from "../../utils/fetchIt"
 import "./Login.css"
+import { Employee } from "../employees/Employee"
 
 export const EmployeeRegister = (props) => {
     const [employee, setEmployee] = useState({ "account_type": "employee" })
     const [serverFeedback, setFeedback] = useState("")
+    const [specialties, updateSpecialties] = useState([]);
     const conflictDialog = useRef()
     const history = useHistory()
 
@@ -48,15 +49,15 @@ export const EmployeeRegister = (props) => {
     }
 
 
-    const [selectedSpecialty, setSelectedSpecialty] = useState([])
 
-    useEffect(() => {
-        fetchIt("http://localhost:8000/instruments")
-            .then((specialty) => {
-                setSelectedSpecialty(specialty);
-            })
-            .catch(() => setSelectedSpecialty([]));
-    }, []);
+useEffect(() => {
+    fetch("http://localhost:8000/specialties")
+        .then((response) => response.json()) // Parse the response as JSON
+        .then((data) => {
+            updateSpecialties(data); // Update the specialties array
+        })
+}, []);
+
 
 
     return (
@@ -94,10 +95,10 @@ export const EmployeeRegister = (props) => {
                                 setEmployee(copy); // Update the employee state
                             }}
                         >
-                            <option value="">Select Specialty</option>
-                            {selectedSpecialty.map((instrument) => (
-                                <option key={instrument.id} value={instrument.id}>
-                                    {instrument.instrument_name}
+                            <option value="">Select specialty</option>
+                            {specialties.map((specialty) => (
+                                <option key={specialty.id} value={specialty.id}>
+                                    {specialty.specialty_name}
                                 </option>
                             ))}
                         </select>

@@ -22,10 +22,10 @@ export const TicketForm = () => {
 
     useEffect(() => {
         fetchIt("http://localhost:8000/instruments")
-        .then((instrument) => {
-            updateInstruments(instrument)
-        })
-        .catch(() => updateInstruments([]))
+            .then((instrument) => {
+                updateInstruments(instrument)
+            })
+            .catch(() => updateInstruments([]))
     }, []);
 
 
