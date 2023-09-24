@@ -5,8 +5,7 @@ import { fetchIt } from "../../utils/fetchIt"
 export const TicketForm = () => {
 
     const [ticket, updateTicket] = useState({
-        customer: "",
-        instrument: "",
+        instrument: null,
         description: "",
         notes: "",
         date: "",
@@ -136,7 +135,6 @@ export const TicketForm = () => {
                     <label htmlFor="modification">No</label>
                 </div>
             </fieldset>
-
             <fieldset>
                 <div className="form-group">
                     <label htmlFor="repair">Repair:</label>
@@ -167,7 +165,6 @@ export const TicketForm = () => {
                     <label htmlFor="repair">No</label>
                 </div>
             </fieldset>
-
             <fieldset>
                 <div className="form-group">
                     <label htmlFor="setup">Setup:</label>
@@ -198,7 +195,6 @@ export const TicketForm = () => {
                     <label htmlFor="setup">No</label>
                 </div>
             </fieldset>
-
             <fieldset>
                 <div className="form-group">
                     <label htmlFor="priority">Priority:</label>
@@ -229,7 +225,6 @@ export const TicketForm = () => {
                     <label htmlFor="priority">No</label>
                 </div>
             </fieldset>
-
             <fieldset>
                 <div className="form-group">
                     <label htmlFor="notes">Notes:</label>

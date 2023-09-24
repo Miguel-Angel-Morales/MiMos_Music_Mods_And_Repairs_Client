@@ -5,7 +5,7 @@ import "./Login.css"
 
 export const Login = () => {
     const [email, setEmail] = useState("ATele@gmail.com")
-    const [password, setPassword] = useState("Password123")
+    const [password, setPassword] = useState("123")
     const existDialog = useRef()
     const history = useHistory()
 
@@ -70,7 +70,7 @@ export const Login = () => {
                     <Link to="/register">Register</Link>
                 </section>
                 <section className="link--register">
-                    <Link to="/registeremployee">Register New EMail Employee</Link>
+                    <Link to="/registeremployee">Register Employee</Link>
                 </section>
             </div>
         </main>

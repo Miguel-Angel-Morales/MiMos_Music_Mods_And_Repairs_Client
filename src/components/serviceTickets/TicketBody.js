@@ -6,10 +6,10 @@ export const TicketBody = ({ ticket, toggle }) => {
 
     const showButton = (ticket) => {
         if (ticket.condensed && ticket.canCondense) {
-            return <button className="fakeLink" onClick={() => toggle(ticket)} >[show more]</button>
+            return <button className="fakeLink" onClick={() => toggle(ticket)} ></button>
         }
         else if (!ticket.condensed && ticket.canCondense) {
-            return <button className="fakeLink" onClick={() => toggle(ticket)} >[show less]</button>
+            return <button className="fakeLink" onClick={() => toggle(ticket)} ></button>
         }
         return ""
     }
@@ -23,7 +23,6 @@ export const TicketBody = ({ ticket, toggle }) => {
         }
 
         <div className="ticket__description">
-            {ticket.description}
             {showButton(ticket)}
         </div>
     </div>

@@ -3,7 +3,10 @@
 
 /*Typography
 --------------------------------------------------------------*/
-body,
+body {
+  background-image: url(./drum-blueprints-brickwall.jpg);
+  background-size: contain;
+}
 button,
 input,
 select,

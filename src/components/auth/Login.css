@@ -1,4 +1,5 @@
-.h1, h1 {
+.h1,
+h1 {
     font-size: 2.5rem;
 }
 
@@ -12,12 +13,47 @@ fieldset {
 .loginLinks {
     display: flex;
     justify-content: center;
+    flex-basis: 20%;
+    list-style-type: none;
+    /* Background color */
+    color: #fff;
+    /* Text color */
+    padding: 10px;
+    /* Add padding to create some space around the text */
+    text-align: center;
+    /* Center-align the text */
+    border-radius: 5px;
+    /* Add rounded corners */
+    cursor: pointer;
+    /* Change cursor on hover */
+    transition: background-color 0.3s ease;
+    /* Smooth transition for background color */
 }
 
+/* Style for the button-like links */
 .link--register {
-    padding: 0 1.5rem;
+    display: inline-block;
+    padding: 10px 20px;
+    /* Adjust padding as needed */
+    background-color: #f7b736;
+    /* Button background color */
+    color: #fff;
+    /* Text color */
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-right: 100px;
+    margin-left: 100px;
+    /* Add right margin to create space between buttons */
 }
 
+/* Hover effect for the buttons */
+.link--register:hover {
+    background-color: #f7b736;
+    /* Change background color on hover */
+}
 .form--login {
     display: inline-block;
     margin: 0 auto;
@@ -26,7 +62,7 @@ fieldset {
     z-index: 1;
     min-height: 25rem;
     min-width: 35rem;
-    background-color: hsla(0,0%,100%,0.70);
+    background-color: hsla(0, 0%, 100%, 0.70);
     background-blend-mode: overlay;
     background-repeat: no-repeat;
     background-position-x: right;
@@ -34,7 +70,7 @@ fieldset {
     background-size: cover;
 }
 
-.form--login > fieldset > input {
+.form--login>fieldset>input {
     width: 25em;
 }
 
@@ -56,12 +92,13 @@ fieldset {
     background-clip: padding-box;
     border: 1px solid #ced4da;
     border-radius: .25rem;
-    -webkit-transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
-    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    -webkit-transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 }
 
 .container--login {
     text-align: center;
+
 }
 
 .button--close {
@@ -73,4 +110,3 @@ fieldset {
     min-width: 15rem;
     min-height: 5rem;
 }
-

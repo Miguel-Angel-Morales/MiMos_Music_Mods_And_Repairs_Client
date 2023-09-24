@@ -1,6 +1,33 @@
 .actions {
     display: flex;
     justify-content: flex-end;
+
+}
+
+.actions__create {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    padding: 1rem 2rem;
+    border-radius: 10px;
+    /* Add rounded edges */
+    background-color: #fb7f32;
+    /* Change the background color to a cool blue */
+    color: #fff;
+    /* Text color */
+    border: none;
+    /* Remove border */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    /* Add a smooth transition effect */
+
+    /* Add a hover effect */
+    &:hover {
+        background-color: #f4be1d;
+        /* Darker blue on hover */
+    }
 }
 
 .tickets {
@@ -18,24 +45,43 @@
         justify-content: space-between;
     }
 }
+
 .ticket {
     display: flex;
     flex-direction: column;
     flex-basis: 35%;
     padding: 1.5rem;
     border-radius: 0.25rem;
-    border: 1px solid salmon;
+    border: 1px solid rgb(102, 206, 234);
     margin: 1.25rem 0;
     position: relative;
-    box-shadow: 0.25rem 0.25rem 0.35rem rgba(0,0,0,0.5);
+    box-shadow: 0.25rem 0.25rem 0.35rem rgba(0, 0, 0, 0.5);
 }
 
 .ticket__customer {
     margin-bottom: 1rem;
+    color: rgb(0, 67, 156)
 }
 
 .ticket__body {
     margin: 0 0 1rem 0;
+}
+
+.ticket__list {
+    font-size: 2rem;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-weight: 900;
+    margin: 0 auto;
+    text-align: left;
+    padding: 0 0 0 2rem;
+    z-index: 1;
+    min-height: 25rem;
+    min-width: 35rem;
+    background-color: hsla(0, 0%, 100%, 0.70);
+    background-blend-mode: overlay;
+    background-repeat: no-repeat;
+    background-position: right;
+    background-size: contain;
 }
 
 .ticket__icon {
@@ -46,7 +92,20 @@
 
 .ticket__header {
     font-size: 1rem;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     font-weight: 900;
+    margin: 0 auto;
+    text-align: left;
+    padding: 0 0 0 2rem;
+    z-index: 1;
+    min-height: 5rem;
+    min-width: 10rem;
+    background-color: hsla(0, 0%, 100%, 0.70);
+    background-blend-mode: overlay;
+    background-image: url(./yellow-tele-comp.jpg);
+    background-repeat: no-repeat;
+    background-position: right;
+    background-size: cover;
 }
 
 .ticket__footer {
@@ -83,7 +142,7 @@
 }
 
 .status--completed {
-    background-color: lightgreen;
+    background-color: rgb(255, 255, 255);
     display: inline-block;
     padding: 0.2rem 0.5rem;
 }
@@ -96,4 +155,51 @@
     font-weight: 900;
     font-size: 1rem;
     color: crimson;
+}
+
+.ticketForm {
+    margin: 0 auto;
+    text-align: left;
+    padding: 0 0 0 2rem;
+    z-index: 1;
+    min-height: 25rem;
+    min-width: 35rem;
+    background-color: hsla(0, 0%, 100%, 0.70);
+    background-blend-mode: overlay;
+    background-repeat: no-repeat;
+    background-position: right;
+    background-image: url(./yellow-tele-comp.jpg);
+    background-size: cover;
+}
+
+/* Add this CSS to your existing styles */
+.button-container {
+    display: flex;
+    justify-content: center;
+    /* Center the buttons horizontally */
+    align-items: center;
+    margin-top: 1rem;
+    /* Add margin at the top */
+}
+
+/* Update the CSS for the "Edit" and "Delete" buttons */
+.editButton,
+.deleteButton {
+    padding: 0.75rem 1.5rem;
+    margin-right: 10rem;
+    margin-left: 10rem;
+    /* Increase padding for a bigger button */
+    font-size: 1.2rem;
+    /* Increase font size for a bigger button */
+    border-radius: 10px;
+    background-color: #fb7f32;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.editButton:hover,
+.deleteButton:hover {
+    background-color: #f4be1d;
 }

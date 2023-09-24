@@ -3,12 +3,12 @@ import { useHistory } from "react-router-dom"
 import { fetchIt } from "../../utils/fetchIt"
 import { useParams } from "react-router-dom"
 
-export const TicketEditAndDelete = () => {
+export const TicketEdit = () => {
 
-    
+
     const [ticket, setTicket] = useState({
         customer: { id: null, user: null }, // Default values based on the API response structure
-        instrument: "",
+        instrument: '',
         description: '',
         notes: '',
         date: '',
@@ -35,21 +35,38 @@ export const TicketEditAndDelete = () => {
     useEffect(() => {
         fetchIt(`http://localhost:8000/servicetickets/${ticketId}`)
             .then((data) => {
+                // Ensure that the selected instrument from the dropdown is preserved
+                // by copying the selected instrument from data if it's not already set
+                if (!data.instrument) {
+                    data.instrument = { id: null, instrument_name: '' };
+                }
                 setTicket(data);
             })
             .catch(() => setTicket({}));
     }, [ticketId]);
 
-
     const submitEditedTicket = (evt) => {
-        evt.preventDefault()
+        evt.preventDefault();
 
-        fetchIt(
-            `http://localhost:8000/servicetickets/${ticketId}`,
-            { method: "PUT", body: JSON.stringify(ticket) }
-        )
+        // Extract the instrument ID from the ticket object
+        const instrumentId = ticket.instrument.id;
+
+        // Create a new payload with just the instrument ID
+        const updatedTicketData = {
+            ...ticket,
+            instrument: instrumentId,
+        };
+
+        fetchIt(`http://localhost:8000/servicetickets/${ticketId}`, {
+            method: "PUT",
+            body: JSON.stringify(updatedTicketData),
+        })
             .then(() => history.push("/servicetickets"))
-    }
+            .catch((error) => {
+                // Handle error
+                console.error("Error updating ticket:", error);
+            });
+    };
 
 
     // Make a fetch for the instruments
@@ -62,23 +79,33 @@ export const TicketEditAndDelete = () => {
             <h2 className="ticketForm__title">Edit Service Ticket</h2>
             <fieldset>
                 <div className="form-group">
-                    <label htmlFor="instrument">Instrument</label>
                     <select
                         name="instrument"
                         className="form-control"
-                        value={ticket.instrument.id} // Use the ID property
+                        value={ticket.instrument.id}
                         onChange={(evt) => {
-                            const copy = { ...ticket };
-                            copy.instrument.id = evt.target.value; // Update the ID property
-                            setTicket(copy);
+                            const selectedInstrumentId = evt.target.value;
+
+                            // Find the selected instrument object from the instruments array
+                            const selectedInstrument = instruments.find(
+                                (instrument) => instrument.id === parseInt(selectedInstrumentId)
+                            );
+
+                            console.log('Selected instrument:', selectedInstrument);
+
+                            // Ensure that selectedInstrument is defined before updating the state
+                            if (selectedInstrument) {
+                                // Update the entire instrument object in the ticket state
+                                setTicket((prevTicket) => ({
+                                    ...prevTicket,
+                                    instrument: selectedInstrument,
+                                }));
+                            }
                         }}
                     >
                         <option value="">Select an instrument...</option>
                         {instruments.map((instrument) => (
-                            <option
-                                key={instrument.id}
-                                value={instrument.id}
-                            >
+                            <option key={instrument.id} value={instrument.id}>
                                 {instrument.instrument_name}
                             </option>
                         ))}
@@ -97,7 +124,7 @@ export const TicketEditAndDelete = () => {
                         className="form-control"
                         value={ticket.date}
                         onChange={(evt) => {
-                            const copy = { ...ticket};
+                            const copy = { ...ticket };
                             copy.date = evt.target.value;
                             setTicket(copy);
                         }}
@@ -213,7 +240,6 @@ export const TicketEditAndDelete = () => {
                     <label htmlFor="setup">No</label>
                 </div>
             </fieldset>
-
             <fieldset>
                 <div className="form-group">
                     <label htmlFor="priority">Priority:</label>
@@ -244,7 +270,6 @@ export const TicketEditAndDelete = () => {
                     <label htmlFor="priority">No</label>
                 </div>
             </fieldset>
-
             <fieldset>
                 <div className="form-group">
                     <label htmlFor="notes">Notes:</label>
@@ -257,7 +282,7 @@ export const TicketEditAndDelete = () => {
                             }
                         }
                         required autoFocus
-                        type="text" 
+                        type="text"
                         id="notes"
                         className="form-control"
                         placeholder="Notes for our techs"

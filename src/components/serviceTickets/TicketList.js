@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom"
 import { fetchIt } from "../../utils/fetchIt"
 import { isStaff } from "../../utils/isStaff"
 import { useCondensed } from "./useCondensed"
+import { useParams } from "react-router-dom"
 import { TicketCard } from "./TicketCard"
 import "./Tickets.css"
 
@@ -10,6 +11,9 @@ export const TicketList = () => {
     const [active, setActive] = useState("")
     const { toggle, setOriginal, condensed: servicetickets } = useCondensed({ limit: 40, field: "description" })
     const history = useHistory()
+    const [ticket, loadTicket] = useState({})
+    const [employees, syncEmployees] = useState([])
+    const { ticketId } = useParams()
 
     useEffect(() => {
         fetchIt("http://localhost:8000/servicetickets")
@@ -19,15 +23,15 @@ export const TicketList = () => {
             .catch(() => setOriginal([]))
     }, [])
 
-    useEffect(() => {
-        const activeTicketCount = servicetickets.filter(t => t.date_completed === null).length
-        if (isStaff()) {
-            setActive(`There are ${activeTicketCount} open servicetickets`)
-        }
-        else {
-            setActive(`You have ${activeTicketCount} open servicetickets`)
-        }
-    }, [servicetickets])
+    /*     useEffect(() => {
+            const activeTicketCount = servicetickets.filter(t => t.date_completed === null).length
+            if (isStaff()) {
+                setActive(`There are ${activeTicketCount} open servicetickets`)
+            }
+            else {
+                setActive(`You have ${activeTicketCount} open servicetickets`)
+            }
+        }, [servicetickets]) */
 
     const toShowOrNotToShowTheButton = () => {
         if (isStaff()) {
@@ -47,15 +51,20 @@ export const TicketList = () => {
             .catch(() => setOriginal([]))
     }
 
-    return <>
-        <div>
-            <button onClick={() => filterservicetickets("done")}>Show Done</button>
-            <button onClick={() => filterservicetickets("all")}>Show All</button>
-        </div>
-        <div className="actions">{toShowOrNotToShowTheButton()}</div>
-        <div className="activeservicetickets">{active}</div>
-        <article className="servicetickets">
-            { servicetickets.map(ticket => <TicketCard key={`ticket--${ticket.id}`} ticket={ticket} toggle={toggle} />) }
-        </article>
-    </>
+    return (
+        <form className="ticket__list">
+            <div>
+                <button onClick={() => filterservicetickets("done")}>Show Done</button>
+                <button onClick={() => filterservicetickets("all")}>Show All</button>
+            </div>
+            <div className="actions">{toShowOrNotToShowTheButton()}</div>
+            <div className="activeservicetickets">{active}</div>
+            <article className="servicetickets">
+                {servicetickets.map(ticket => (
+                    <TicketCard key={`ticket--${ticket.id}`} ticket={ticket} toggle={toggle} />
+                ))}
+            </article>
+        </form>
+    );
+
 }

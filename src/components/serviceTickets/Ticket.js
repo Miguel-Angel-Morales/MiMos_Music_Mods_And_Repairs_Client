@@ -30,15 +30,6 @@ export const Ticket = () => {
         }, []
     )
 
-    const deleteTicket = () => {
-        fetchIt(
-            `http://localhost:8000/servicetickets/${ticketId}`,
-            {
-                method: "DELETE"
-            }
-        ).then(() => history.push("/servicetickets"))
-    }
-
     const updateTicket = (evt) => {
         const updatedTicket = { ...ticket, employee: parseInt(evt.target.value) }
 
@@ -51,15 +42,7 @@ export const Ticket = () => {
         ).then(fetchTicket)
     }
 
-    const ticketStatus = () => {
-        if (ticket.date_completed === null) {
-            if (ticket.employee) {
-                return <span className="status--in-progress">In progress</span>
-            }
-            return <span className="status--new">Unclaimed</span>
-        }
-        return <span className="status--completed">Done</span>
-    }
+
 
     const employeePicker = (ticket) => {
         if (isStaff()) {
@@ -81,30 +64,6 @@ export const Ticket = () => {
 
     return (
         <>
-            <section className="ticket">
-                <h3 className="ticket__description">Description</h3>
-                <div>{ticket.description}</div>
-
-                <footer className="ticket__footer ticket__footer--detail">
-                    <div className=" footerItem">Submitted by {ticket.customer?.full_name}</div>
-                    <div className="ticket__employee footerItem">
-                        {
-                            ticket.date_completed === null
-                                ? employeePicker(ticket)
-                                : `Completed by ${ticket.employee?.name} on ${ticket.date_completed}`
-                        }
-                    </div>
-                    <div className="footerItem">
-                        {ticketStatus()}
-                    </div>
-                    {
-                        isStaff()
-                            ? ""
-                            : <button onClick={deleteTicket}>Delete</button>
-                    }
-                </footer>
-
-            </section>
         </>
     )
 }
